@@ -110,8 +110,8 @@ export default function VibeCard({
         <div className="text-center flex-1 flex flex-col justify-center">
           <div className="flex-1 flex flex-col justify-center">
             <div className="text-3xl mb-2">{emoji}</div>
-            <h3 className={`font-semibold text-base mb-3 line-clamp-2 ${joined ? 'text-white' : 'text-gray-800'}`}>
-              {title}
+            <h3 className={`font-semibold text-base mb-3 ${joined ? 'text-white' : 'text-gray-800'}`}>
+              {title.length > 16 ? `${title.substring(0, 16)}...` : title}
             </h3>
             
             {/* Date/Time and Venue Info - Only show if data exists */}

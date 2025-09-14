@@ -106,7 +106,7 @@ export default function AddVibeForm({ groupId, onVibeAdded }: AddVibeFormProps) 
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Gaming Session"
           className="flex-1 p-2 border border-gray-300 rounded-lg"
-          maxLength={30}
+          maxLength={16}
           required
         />
       </div>

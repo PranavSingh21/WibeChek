@@ -85,7 +85,7 @@ export default function VibeCard({
       <div
         onClick={onClick}
         className={`
-          relative p-4 rounded-2xl cursor-pointer transition-all duration-300 transform hover:scale-105 active:scale-95
+          relative p-4 rounded-2xl cursor-pointer transition-all duration-300 transform hover:scale-105 active:scale-95 h-48 flex flex-col
           ${joined 
             ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/25' 
             : 'bg-white hover:bg-gray-50 shadow-md hover:shadow-lg'
@@ -107,44 +107,48 @@ export default function VibeCard({
           </button>
         </div>
 
-        <div className="text-center">
-          <div className="text-3xl mb-2">{emoji}</div>
-          <h3 className={`font-semibold text-base mb-2 ${joined ? 'text-white' : 'text-gray-800'}`}>
-            {title}
-          </h3>
-          
-          {/* Date/Time Info - Each on separate line */}
-          <div className={`space-y-1 mb-3 text-xs ${joined ? 'text-purple-100' : 'text-gray-600'}`}>
-            {date && (
-              <div className="flex items-center justify-center space-x-1 mb-1">
-                <Calendar size={12} />
-                <span>{formatDateWithDay(date)}</span>
+        <div className="text-center flex-1 flex flex-col justify-center">
+          <div className="flex-1 flex flex-col justify-center">
+            <div className="text-3xl mb-2">{emoji}</div>
+            <h3 className={`font-semibold text-base mb-3 line-clamp-2 ${joined ? 'text-white' : 'text-gray-800'}`}>
+              {title}
+            </h3>
+            
+            {/* Date/Time and Venue Info - Only show if data exists */}
+            {(date || time || venue) && (
+              <div className={`space-y-1 mb-3 text-xs ${joined ? 'text-purple-100' : 'text-gray-600'}`}>
+                {date && (
+                  <div className="flex items-center justify-center space-x-1">
+                    <Calendar size={12} />
+                    <span>{formatDateWithDay(date)}</span>
+                  </div>
+                )}
+                {time && (
+                  <div className="flex items-center justify-center space-x-1">
+                    <Clock size={12} />
+                    <span>{(() => {
+                      const [hours, minutes] = time.split(':');
+                      const hour12 = parseInt(hours) % 12 || 12;
+                      const ampm = parseInt(hours) >= 12 ? 'PM' : 'AM';
+                      return `${hour12}:${minutes} ${ampm}`;
+                    })()}</span>
+                  </div>
+                )}
+                {venue && (
+                  <div className="flex items-center justify-center space-x-1">
+                    <MapPin size={12} />
+                    <span className="truncate max-w-[120px]">{venue}</span>
+                  </div>
+                )}
               </div>
             )}
-            {time && (
-              <div className="flex items-center justify-center space-x-1 mb-1">
-                <Clock size={12} />
-                <span>{(() => {
-                  const [hours, minutes] = time.split(':');
-                  const hour12 = parseInt(hours) % 12 || 12;
-                  const ampm = parseInt(hours) >= 12 ? 'PM' : 'AM';
-                  return `${hour12}:${minutes} ${ampm}`;
-                })()}</span>
+            
+            {/* Participants Count */}
+            <div className={`text-sm ${joined ? 'text-purple-100' : 'text-gray-500'}`}>
+              <div className="flex items-center justify-center space-x-1">
+                <Users size={16} />
+                <span>{count} {count === 1 ? 'person' : 'people'}</span>
               </div>
-            )}
-            {venue && (
-              <div className="flex items-center justify-center space-x-1 mb-1">
-                <MapPin size={12} />
-                <span className="truncate">{venue}</span>
-              </div>
-            )}
-          </div>
-          
-          {/* Participants Count */}
-          <div className={`text-sm ${joined ? 'text-purple-100' : 'text-gray-500'}`}>
-            <div className="flex items-center justify-center space-x-1">
-              <Users size={16} />
-              <span>{count} {count === 1 ? 'person' : 'people'}</span>
             </div>
           </div>
         </div>
@@ -159,15 +163,13 @@ export default function VibeCard({
       {/* Dropdown Menu */}
       {showMenu && (
         <div className="absolute top-8 left-2 bg-white border border-gray-200 rounded-lg shadow-lg z-20 min-w-[120px]">
-          {participantNames && participantNames.length > 0 && (
-            <button
-              onClick={handleViewParticipants}
-              className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-            >
-              <Users size={14} />
-              <span>View People</span>
-            </button>
-          )}
+          <button
+            onClick={handleViewParticipants}
+            className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+          >
+            <Users size={14} />
+            <span>View People</span>
+          </button>
           <button
             onClick={handleEdit}
             className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"

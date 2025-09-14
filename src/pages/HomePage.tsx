@@ -222,7 +222,7 @@ export default function HomePage() {
                 return {
                   ...vibe,
                   emoji: correctedEmoji,
-                  participantNames
+                  participantNames: participantNames || [] // Ensure it's always an array
                 };
               })
             );

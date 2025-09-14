@@ -7,6 +7,7 @@ import {
   updateDoc, 
   arrayUnion, 
   arrayRemove,
+  deleteDoc,
   setDoc,
   getDoc,
   query,
@@ -59,6 +60,12 @@ export default function HomePage() {
   const [editingImage, setEditingImage] = useState(false);
   const [newName, setNewName] = useState('');
   const [newImageURL, setNewImageURL] = useState('');
+  const [editingVibe, setEditingVibe] = useState<{groupId: string, vibe: Vibe} | null>(null);
+  const [editVibeEmoji, setEditVibeEmoji] = useState('');
+  const [editVibeTitle, setEditVibeTitle] = useState('');
+  const [editVibeDate, setEditVibeDate] = useState('');
+  const [editVibeTime, setEditVibeTime] = useState('');
+  const [editVibeVenue, setEditVibeVenue] = useState('');
   const [userProfile, setUserProfile] = useState({
     uid: '',
     name: '',
@@ -286,6 +293,73 @@ export default function HomePage() {
     }
   };
 
+  const handleEditVibe = (groupId: string, vibe: Vibe) => {
+    setEditingVibe({ groupId, vibe });
+    setEditVibeEmoji(vibe.emoji);
+    setEditVibeTitle(vibe.title);
+    setEditVibeDate(vibe.date || '');
+    setEditVibeTime(vibe.time || '');
+    setEditVibeVenue(vibe.venue || '');
+  };
+
+  const handleSaveVibeEdit = async () => {
+    if (!editingVibe || !editVibeEmoji.trim() || !editVibeTitle.trim()) return;
+
+    try {
+      const vibeRef = doc(db, 'groups', editingVibe.groupId, 'vibes', editingVibe.vibe.id);
+      const updateData: any = {
+        emoji: editVibeEmoji.trim(),
+        title: editVibeTitle.trim(),
+        updatedAt: new Date(),
+      };
+
+      // Only update optional fields if they have values
+      if (editVibeDate.trim()) {
+        updateData.date = editVibeDate.trim();
+      } else {
+        updateData.date = null;
+      }
+
+      if (editVibeTime.trim()) {
+        updateData.time = editVibeTime.trim();
+      } else {
+        updateData.time = null;
+      }
+
+      if (editVibeVenue.trim()) {
+        updateData.venue = editVibeVenue.trim();
+      } else {
+        updateData.venue = null;
+      }
+
+      await updateDoc(vibeRef, updateData);
+      setEditingVibe(null);
+      console.log('Vibe updated successfully');
+    } catch (error) {
+      console.error('Error updating vibe:', error);
+    }
+  };
+
+  const handleDeleteVibe = async (groupId: string, vibeId: string) => {
+    if (!confirm('Are you sure you want to delete this vibe?')) return;
+
+    try {
+      await deleteDoc(doc(db, 'groups', groupId, 'vibes', vibeId));
+      console.log('Vibe deleted successfully');
+    } catch (error) {
+      console.error('Error deleting vibe:', error);
+    }
+  };
+
+  const cancelVibeEdit = () => {
+    setEditingVibe(null);
+    setEditVibeEmoji('');
+    setEditVibeTitle('');
+    setEditVibeDate('');
+    setEditVibeTime('');
+    setEditVibeVenue('');
+  };
+
   const handleNameEdit = () => {
     setEditingName(true);
     setNewName(userProfile.name);
@@ -496,6 +570,9 @@ export default function HomePage() {
                           count={vibe.participants.length}
                           participantNames={vibe.participantNames}
                           joined={vibe.participants.includes(currentUser.uid)} // Using mock user
+                          isCreatedByCurrentUser={vibe.createdBy === currentUser.uid}
+                          onEdit={() => handleEditVibe(group.id, vibe)}
+                          onDelete={() => handleDeleteVibe(group.id, vibe.id)}
                           onClick={() => handleVibeToggle(
                             group.id, 
                             vibe.id, 
@@ -616,6 +693,79 @@ export default function HomePage() {
                 className="flex-1 py-3 px-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-medium hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Vibe Modal */}
+      {editingVibe && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Edit Vibe</h3>
+            
+            <div className="space-y-4">
+              {/* Emoji and Title Row */}
+              <div className="flex space-x-2">
+                <input
+                  type="text"
+                  value={editVibeEmoji}
+                  onChange={(e) => setEditVibeEmoji(e.target.value)}
+                  placeholder="🎮"
+                  className="w-14 p-2 border border-gray-300 rounded-lg text-center text-lg"
+                  maxLength={2}
+                />
+                <input
+                  type="text"
+                  value={editVibeTitle}
+                  onChange={(e) => setEditVibeTitle(e.target.value)}
+                  placeholder="Gaming Session"
+                  className="flex-1 p-2 border border-gray-300 rounded-lg"
+                  maxLength={30}
+                />
+              </div>
+              
+              {/* Date and Time Row */}
+              <div className="grid grid-cols-2 gap-2">
+                <input
+                  type="date"
+                  value={editVibeDate}
+                  onChange={(e) => setEditVibeDate(e.target.value)}
+                  className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                />
+                <input
+                  type="time"
+                  value={editVibeTime}
+                  onChange={(e) => setEditVibeTime(e.target.value)}
+                  className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                />
+              </div>
+
+              {/* Venue Row */}
+              <input
+                type="text"
+                value={editVibeVenue}
+                onChange={(e) => setEditVibeVenue(e.target.value)}
+                placeholder="Venue (optional)"
+                className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                maxLength={50}
+              />
+            </div>
+
+            <div className="flex space-x-3 mt-6">
+              <button
+                onClick={cancelVibeEdit}
+                className="flex-1 py-3 px-4 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveVibeEdit}
+                disabled={!editVibeEmoji.trim() || !editVibeTitle.trim()}
+                className="flex-1 py-3 px-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-medium hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Save Changes
               </button>
             </div>
           </div>

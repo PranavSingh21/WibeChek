@@ -71,6 +71,7 @@ export default function VibeCard({
     onDelete?.();
   };
 
+  console.log('VibeCard props:', { isCreatedByCurrentUser, onEdit, onDelete }); // Debug log
   return (
     <div className="relative">
       <div
@@ -84,8 +85,8 @@ export default function VibeCard({
           border-2 ${joined ? 'border-transparent' : 'border-gray-100 hover:border-purple-200'}
         `}
       >
-        {/* Menu Button - Only show for creator */}
-        {isCreatedByCurrentUser && (
+        {/* Menu Button - Always show for debugging */}
+        <div>
           <button
             onClick={handleMenuClick}
             className={`absolute top-2 left-2 p-1 rounded-full transition-colors z-10 ${
@@ -96,7 +97,7 @@ export default function VibeCard({
           >
             <MoreVertical size={16} />
           </button>
-        )}
+        </div>
 
         <div className="text-center">
           <div className="text-3xl mb-2">{emoji}</div>
@@ -152,7 +153,7 @@ export default function VibeCard({
       </div>
 
       {/* Dropdown Menu */}
-      {showMenu && isCreatedByCurrentUser && (
+      {showMenu && (
         <div className="absolute top-8 left-2 bg-white border border-gray-200 rounded-lg shadow-lg z-20 min-w-[100px]">
           <button
             onClick={handleEdit}

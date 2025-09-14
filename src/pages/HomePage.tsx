@@ -570,9 +570,15 @@ export default function HomePage() {
                           count={vibe.participants.length}
                           participantNames={vibe.participantNames}
                           joined={vibe.participants.includes(currentUser.uid)} // Using mock user
-                          isCreatedByCurrentUser={vibe.createdBy === currentUser.uid}
-                          onEdit={() => handleEditVibe(group.id, vibe)}
-                          onDelete={() => handleDeleteVibe(group.id, vibe.id)}
+                          isCreatedByCurrentUser={true} // Allow all users to edit
+                          onEdit={() => {
+                            console.log('Edit clicked for vibe:', vibe.id);
+                            handleEditVibe(group.id, vibe);
+                          }}
+                          onDelete={() => {
+                            console.log('Delete clicked for vibe:', vibe.id);
+                            handleDeleteVibe(group.id, vibe.id);
+                          }}
                           onClick={() => handleVibeToggle(
                             group.id, 
                             vibe.id, 

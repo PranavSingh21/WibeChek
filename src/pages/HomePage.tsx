@@ -39,6 +39,7 @@ interface VibeWithParticipantNames extends Vibe {
 interface Group {
   id: string;
   name: string;
+  icon?: string;
   members: string[];
   createdBy: string;
 }
@@ -242,6 +243,7 @@ export default function HomePage() {
       return participantIds.map(() => 'Unknown User');
     }
   };
+  
   const toggleGroupExpansion = (groupId: string) => {
     const newExpanded = new Set(expandedGroups);
     if (newExpanded.has(groupId)) {
@@ -263,18 +265,18 @@ export default function HomePage() {
         email: userProfile.email,
         photoURL: userProfile.photoURL,
         groups: userProfile.groups || [],
-        isAvailable: true,
+        isAvailable: isAvailable,
         lastSeen: new Date(),
         createdAt: new Date(),
       }, { merge: true });
 
       if (isCurrentlyJoined) {
         await updateDoc(vibeRef, {
-          participants: arrayRemove(currentUser.uid)
+          participants: arrayRemove(currentUser.uid) // Using mock user
         });
       } else {
         await updateDoc(vibeRef, {
-          participants: arrayUnion(currentUser.uid)
+          participants: arrayUnion(currentUser.uid) // Using mock user
         });
       }
       
@@ -360,6 +362,7 @@ export default function HomePage() {
       setNewImageURL(imageUrl);
     }
   };
+  
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 flex items-center justify-center">
@@ -454,7 +457,7 @@ export default function HomePage() {
                 className="w-full p-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center space-x-3">
-                  <div className="text-2xl">👥</div>
+                  <div className="text-2xl">{group.icon || '👥'}</div>
                   <div className="text-left">
                     <h2 className="text-lg font-semibold text-gray-800">{group.name}</h2>
                     <p className="text-sm text-gray-500">

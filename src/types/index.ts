@@ -21,6 +21,16 @@ export interface Vibe {
   createdAt: Date;
 }
 
+export interface Group {
+  id: string;
+  name: string;
+  icon?: string;
+  code: string;
+  createdBy: string;
+  members: string[];
+  createdAt: Date;
+}
+
 export interface UserVibe {
   userId: string;
   vibeId: string;

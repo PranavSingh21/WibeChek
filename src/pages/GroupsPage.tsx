@@ -226,6 +226,14 @@ export default function GroupsPage() {
       setEditGroupIcon('');
       setOpenMenu(null);
       
+      // Reload user groups to reflect changes immediately
+      const updatedGroups = userGroups.map(group => 
+        group.id === groupId 
+          ? { ...group, name: editGroupName.trim(), icon: editGroupIcon.trim() }
+          : group
+      );
+      setUserGroups(updatedGroups);
+      
     } catch (error) {
       console.error('Error updating group:', error);
       setError('Failed to update group. Please try again.');

@@ -19,6 +19,7 @@ import VibeCard from '../components/VibeCard';
 import AddVibeForm from '../components/AddVibeForm';
 import { useAuth } from '../contexts/AuthContext';
 import { ChevronDown, ChevronRight, Users, Settings } from 'lucide-react';
+import { useKeyboardAdjustment } from '../hooks/UseKeyboardAdjustment';
 
 // Mock user for development - replace with real Firebase Auth later
 
@@ -72,6 +73,12 @@ export default function HomePage() {
     email: '',
     photoURL: '',
     groups: []
+  });
+
+  // Enable keyboard adjustment for modals
+  useKeyboardAdjustment({ 
+    enabled: editingName || editingImage || !!editingVibe,
+    offset: 40 
   });
 
   // Helper function to check if input contains only emoji/icons
@@ -658,7 +665,7 @@ export default function HomePage() {
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
                   placeholder="Enter your name"
-                  className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   maxLength={50}
                   autoFocus
                 />
@@ -711,7 +718,7 @@ export default function HomePage() {
                     type="file"
                     accept="image/*"
                     onChange={handleImageUpload}
-                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100"
+                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100"
                     autoFocus
                   />
                 </div>
@@ -754,7 +761,7 @@ export default function HomePage() {
                   value={editVibeEmoji}
                   onChange={handleEmojiChange}
                   placeholder="🎮"
-                  className="w-14 p-2 border border-gray-300 rounded-lg text-center text-lg"
+                  className="w-14 p-2 border border-gray-300 rounded-lg text-center text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   maxLength={2}
                   title="Only emoji/icons allowed"
                 />
@@ -763,8 +770,9 @@ export default function HomePage() {
                   value={editVibeTitle}
                   onChange={(e) => setEditVibeTitle(e.target.value)}
                   placeholder="Gaming Session"
-                  className="flex-1 p-2 border border-gray-300 rounded-lg"
+                  className="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   maxLength={16}
+                  autoFocus
                 />
               </div>
               
@@ -774,13 +782,13 @@ export default function HomePage() {
                   type="date"
                   value={editVibeDate}
                   onChange={(e) => setEditVibeDate(e.target.value)}
-                  className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                  className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 />
                 <input
                   type="time"
                   value={editVibeTime}
                   onChange={(e) => setEditVibeTime(e.target.value)}
-                  className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                  className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 />
               </div>
 
@@ -790,7 +798,7 @@ export default function HomePage() {
                 value={editVibeVenue}
                 onChange={(e) => setEditVibeVenue(e.target.value)}
                 placeholder="Venue (optional)"
-                className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 maxLength={50}
               />
             </div>

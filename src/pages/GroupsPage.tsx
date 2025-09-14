@@ -17,6 +17,7 @@ import {
 import { db } from '../firebase/config';
 import { Users, Plus, Home, MoreVertical, Edit2, Trash2, Hash, ArrowRight, Copy, LogOut } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { useKeyboardAdjustment } from '../hooks/UseKeyboardAdjustment';
 
 interface Group {
   id: string;
@@ -41,6 +42,9 @@ export default function GroupsPage() {
   const [editGroupName, setEditGroupName] = useState('');
   const [editGroupIcon, setEditGroupIcon] = useState('');
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+
+  // Enable keyboard adjustment
+  useKeyboardAdjustment({ enabled: true });
 
   // Get current user from authentication
   const currentUser = user ? {
@@ -308,7 +312,7 @@ export default function GroupsPage() {
                 value={groupName}
                 onChange={(e) => setGroupName(e.target.value)}
                 placeholder="My Awesome Group"
-                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 maxLength={50}
               />
             </div>
@@ -347,7 +351,7 @@ export default function GroupsPage() {
                 value={groupCode}
                 onChange={(e) => setGroupCode(e.target.value.toUpperCase())}
                 placeholder="ABC123"
-                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent font-mono text-center text-lg tracking-wider"
+                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all font-mono text-center text-lg tracking-wider"
                 maxLength={6}
               />
             </div>
@@ -396,14 +400,14 @@ export default function GroupsPage() {
                             value={editGroupIcon}
                             onChange={(e) => setEditGroupIcon(e.target.value)}
                             placeholder="👥"
-                            className="w-12 p-2 border border-gray-300 rounded text-center text-lg"
+                            className="w-12 p-2 border border-gray-300 rounded text-center text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                             maxLength={2}
                           />
                           <input
                             type="text"
                             value={editGroupName}
                             onChange={(e) => setEditGroupName(e.target.value)}
-                            className="font-semibold text-gray-800 bg-white border border-gray-300 rounded px-2 py-1 text-sm flex-1"
+                            className="font-semibold text-gray-800 bg-white border border-gray-300 rounded px-2 py-1 text-sm flex-1 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                             maxLength={50}
                             autoFocus
                           />

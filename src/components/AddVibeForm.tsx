@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { Plus, Calendar, Clock, MapPin } from 'lucide-react';
+import { useKeyboardAdjustment } from '../hooks/UseKeyboardAdjustment';
 
 // Mock user for development - replace with real auth later
 const currentUser = {
@@ -31,6 +32,9 @@ export default function AddVibeForm({ groupId, onVibeAdded }: AddVibeFormProps) 
   const [venue, setVenue] = useState('');
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
+
+  // Enable keyboard adjustment for mobile
+  useKeyboardAdjustment({ enabled: showForm });
 
   const handleEmojiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -88,7 +92,7 @@ export default function AddVibeForm({ groupId, onVibeAdded }: AddVibeFormProps) 
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-50 p-4 rounded-xl space-y-4">
+    <form onSubmit={handleSubmit} className="bg-gray-50 p-4 rounded-xl space-y-4" id="add-vibe-form">
       {/* Emoji and Title Row */}
       <div className="flex space-x-2">
         <input
@@ -96,7 +100,7 @@ export default function AddVibeForm({ groupId, onVibeAdded }: AddVibeFormProps) 
           value={emoji}
           onChange={handleEmojiChange}
           placeholder="✨"
-          className="w-14 p-2 border border-gray-300 rounded-lg text-center text-lg"
+          className="w-14 p-2 border border-gray-300 rounded-lg text-center text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
           maxLength={2}
           title="Only emoji/icons allowed"
         />
@@ -105,9 +109,10 @@ export default function AddVibeForm({ groupId, onVibeAdded }: AddVibeFormProps) 
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Gaming Session"
-          className="flex-1 p-2 border border-gray-300 rounded-lg"
+          className="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
           maxLength={16}
           required
+          autoFocus
         />
       </div>
       
@@ -119,7 +124,7 @@ export default function AddVibeForm({ groupId, onVibeAdded }: AddVibeFormProps) 
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full pl-8 pr-2 py-2 border border-gray-300 rounded-lg text-sm"
+            className="w-full pl-8 pr-2 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
             placeholder="Date"
           />
         </div>
@@ -129,7 +134,7 @@ export default function AddVibeForm({ groupId, onVibeAdded }: AddVibeFormProps) 
             type="time"
             value={time}
             onChange={(e) => setTime(e.target.value)}
-            className="w-full pl-8 pr-2 py-2 border border-gray-300 rounded-lg text-sm"
+            className="w-full pl-8 pr-2 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
             placeholder="Time"
           />
         </div>
@@ -143,7 +148,7 @@ export default function AddVibeForm({ groupId, onVibeAdded }: AddVibeFormProps) 
           value={venue}
           onChange={(e) => setVenue(e.target.value)}
           placeholder="Venue (optional)"
-          className="w-full pl-8 pr-2 py-2 border border-gray-300 rounded-lg text-sm"
+          className="w-full pl-8 pr-2 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
           maxLength={50}
         />
       </div>

@@ -74,18 +74,6 @@ export default function HomePage() {
     groups: []
   });
 
-  // Helper function to check if input contains only emoji/icons
-  const isEmojiOnly = (str: string) => {
-    if (!str) return true; // Empty string is allowed
-    // Regex to match emoji, symbols, and pictographs
-    const emojiRegex = /^[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}\u{1F018}-\u{1F270}\u{238C}\u{2194}-\u{21AA}\u{231A}-\u{231B}\u{2328}\u{23CF}\u{23E9}-\u{23F3}\u{23F8}-\u{23FA}\u{24C2}\u{25AA}-\u{25AB}\u{25B6}\u{25C0}\u{25FB}-\u{25FE}\u{2B00}-\u{2BFF}\u{3030}\u{303D}\u{3297}\u{3299}]+$/u;
-    return emojiRegex.test(str);
-  };
-
-  // Helper function to get default emoji if current emoji is invalid
-  const getValidEmoji = (emoji: string) => {
-    return isEmojiOnly(emoji) ? emoji : '✨';
-  };
   // Get current user from authentication
   const currentUser = user ? {
     uid: user.uid,
@@ -204,24 +192,9 @@ export default function HomePage() {
             // Get participant names for each vibe
             const vibesWithNames = await Promise.all(
               vibesData.map(async (vibe) => {
-                const participantNames = await getParticipantNames(vibe.participants, currentUser.uid);
-                const correctedEmoji = getValidEmoji(vibe.emoji);
-                
-                // Update database if emoji was corrected
-                if (correctedEmoji !== vibe.emoji) {
-                  try {
-                    await updateDoc(doc(db, 'groups', group.id, 'vibes', vibe.id), {
-                      emoji: correctedEmoji
-                    });
-                    console.log(`Updated vibe ${vibe.id} emoji from "${vibe.emoji}" to "${correctedEmoji}"`);
-                  } catch (error) {
-                    console.error('Error updating vibe emoji in database:', error);
-                  }
-                }
-                
+                const participantNames = await getParticipantNames(vibe.participants);
                 return {
                   ...vibe,
-                  emoji: correctedEmoji,
                   participantNames
                 };
               })
@@ -254,14 +227,14 @@ export default function HomePage() {
   }, []);
 
   // Helper function to get participant names from user IDs
-  const getParticipantNames = async (participantIds: string[], currentUserId: string): Promise<string[]> => {
+  const getParticipantNames = async (participantIds: string[]): Promise<string[]> => {
     if (participantIds.length === 0) return [];
     
     try {
       const userPromises = participantIds.map(async (userId) => {
         // Handle current user
-        if (userId === currentUserId) {
-          return 'You';
+        if (userId === currentUser.uid) {
+          return userProfile.name;
         }
         
         const userDoc = await getDoc(doc(db, 'users', userId));
@@ -322,7 +295,7 @@ export default function HomePage() {
 
   const handleEditVibe = (groupId: string, vibe: Vibe) => {
     setEditingVibe({ groupId, vibe });
-    setEditVibeEmoji(getValidEmoji(vibe.emoji));
+    setEditVibeEmoji(vibe.emoji);
     setEditVibeTitle(vibe.title);
     setEditVibeDate(vibe.date || '');
     setEditVibeTime(vibe.time || '');
@@ -335,7 +308,7 @@ export default function HomePage() {
     try {
       const vibeRef = doc(db, 'groups', editingVibe.groupId, 'vibes', editingVibe.vibe.id);
       const updateData: any = {
-        emoji: editVibeEmoji.trim() || '✨',
+        emoji: editVibeEmoji.trim(),
         title: editVibeTitle.trim(),
         updatedAt: new Date(),
       };
@@ -385,14 +358,6 @@ export default function HomePage() {
     setEditVibeDate('');
     setEditVibeTime('');
     setEditVibeVenue('');
-  };
-
-  const handleEmojiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    // Only allow emoji/icons, reject text
-    if (isEmojiOnly(value)) {
-      setEditVibeEmoji(value);
-    }
   };
 
   const handleNameEdit = () => {
@@ -752,11 +717,10 @@ export default function HomePage() {
                 <input
                   type="text"
                   value={editVibeEmoji}
-                  onChange={handleEmojiChange}
+                  onChange={(e) => setEditVibeEmoji(e.target.value)}
                   placeholder="🎮"
                   className="w-14 p-2 border border-gray-300 rounded-lg text-center text-lg"
                   maxLength={2}
-                  title="Only emoji/icons allowed"
                 />
                 <input
                   type="text"
@@ -804,7 +768,7 @@ export default function HomePage() {
               </button>
               <button
                 onClick={handleSaveVibeEdit}
-                disabled={!editVibeTitle.trim()}
+                disabled={!editVibeEmoji.trim() || !editVibeTitle.trim()}
                 className="flex-1 py-3 px-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-medium hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Save Changes

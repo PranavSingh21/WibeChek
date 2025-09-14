@@ -16,6 +16,13 @@ interface AddVibeFormProps {
   onVibeAdded?: () => void;
 }
 
+// Helper function to check if input contains only emoji/icons
+const isEmojiOnly = (str: string) => {
+  if (!str) return true; // Empty string is allowed
+  // Regex to match emoji, symbols, and pictographs
+  const emojiRegex = /^[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}\u{1F018}-\u{1F270}\u{238C}\u{2194}-\u{21AA}\u{231A}-\u{231B}\u{2328}\u{23CF}\u{23E9}-\u{23F3}\u{23F8}-\u{23FA}\u{24C2}\u{25AA}-\u{25AB}\u{25B6}\u{25C0}\u{25FB}-\u{25FE}\u{2B00}-\u{2BFF}\u{3030}\u{303D}\u{3297}\u{3299}]+$/u;
+  return emojiRegex.test(str);
+};
 export default function AddVibeForm({ groupId, onVibeAdded }: AddVibeFormProps) {
   const [emoji, setEmoji] = useState('');
   const [title, setTitle] = useState('');
@@ -25,15 +32,22 @@ export default function AddVibeForm({ groupId, onVibeAdded }: AddVibeFormProps) 
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
+  const handleEmojiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Only allow emoji/icons, reject text
+    if (isEmojiOnly(value)) {
+      setEmoji(value);
+    }
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!emoji.trim() || !title.trim()) return;
+    if (!title.trim()) return;
 
     setLoading(true);
     try {
       const vibesRef = collection(db, 'groups', groupId, 'vibes');
       const vibeData: any = {
-        emoji: emoji.trim(),
+        emoji: emoji.trim() || '✨', // Default emoji if none provided
         title: title.trim(),
         createdBy: currentUser.uid, // Using mock user
         participants: [],
@@ -80,11 +94,11 @@ export default function AddVibeForm({ groupId, onVibeAdded }: AddVibeFormProps) 
         <input
           type="text"
           value={emoji}
-          onChange={(e) => setEmoji(e.target.value)}
-          placeholder="🎮"
+          onChange={handleEmojiChange}
+          placeholder="✨"
           className="w-14 p-2 border border-gray-300 rounded-lg text-center text-lg"
           maxLength={2}
-          required
+          title="Only emoji/icons allowed"
         />
         <input
           type="text"
@@ -144,7 +158,7 @@ export default function AddVibeForm({ groupId, onVibeAdded }: AddVibeFormProps) 
         </button>
         <button
           type="submit"
-          disabled={loading || !emoji.trim() || !title.trim()}
+          disabled={loading || !title.trim()}
           className="flex-1 py-2 px-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? 'Adding...' : 'Add Vibe'}

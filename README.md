@@ -18,10 +18,14 @@ Give people a simple, joyful way to broadcast what they’re up to and see what 
 | Authentication | Google sign-in via Firebase Auth | Must-have |
 | Home | Real-time vibe grid showing friend counts | Must-have |
 | Home | Create custom vibes (emoji + text) | Should-have |
-| Home | Availability toggle (Available/Busy) | Must-have |
-| Friends | List of all users with live status | Must-have |
-| Friends | Filter by shared vibes (future) | Could-have |
+| Home | Availability toggle (Available/Busy) | Could-have |
+| Settings | Create new group (Group name input + Create) | Must-have |
+| Settings | Join existing group (Group code input + Join) | Must-have |
+| Settings | List of user’s groups with member count & codes | Must-have |
+| Settings | Sign Out | Must-have |
 | Messaging | Direct messages between friends (future) | Won’t-have (v1) |
+| Friends | List of all users with live status | Won’t-have (v1) |
+| Friends | Filter by shared vibes (future) | Won’t-have (v1) |
 
 ---
 

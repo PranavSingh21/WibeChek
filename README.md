@@ -17,12 +17,21 @@ Give people a simple, joyful way to broadcast what they’re up to and see what 
 |------|---------------|-----------------|
 | Authentication | Google sign-in via Firebase Auth | Must-have |
 | Home | Real-time vibe grid showing friend counts | Must-have |
-| Home | Create custom vibes (emoji + text) | Should-have |
-| Home | Availability toggle (Available/Busy) | Could-have |
+| Home | Create custom vibes (emoji + text) | Must-have |
+| Home | Availability toggle (Available/Busy) | Wont-have |
+| Home | Group Dropdowns containing vibe cards | Must-have |
+| Home | Edit menu for vibe cards | Should-have |
+| Home | Group Dropdowns containing vibe cards | Must-have |
+| Home | Google Map abiltiy for venue field in Vibe cards | could-have |
+| Home | Notification toggle for vibe cards | could-have |
 | Settings | Create new group (Group name input + Create) | Must-have |
 | Settings | Join existing group (Group code input + Join) | Must-have |
-| Settings | List of user’s groups with member count & codes | Must-have |
+| Settings | List of user’s groups with member count & shareable group codes | Must-have |
 | Settings | Sign Out | Must-have |
+| Settings | Edit Group Details Menu | Should-have |
+| Settings | Leave Group | Could-have |
+| Settings | Group Members Details | Could-have |
+| Settings | Group Notifications toggle | Could-have |
 | Messaging | Direct messages between friends (future) | Won’t-have (v1) |
 | Friends | List of all users with live status | Won’t-have (v1) |
 | Friends | Filter by shared vibes (future) | Won’t-have (v1) |
@@ -32,9 +41,9 @@ Give people a simple, joyful way to broadcast what they’re up to and see what 
 ## 👥 User Journey  
 
 1. **Login** – Fast Google sign-in, frictionless onboarding.  
-2. **Home** – Browse or create vibes; see how many friends are in each vibe.  
-3. **Toggle Status** – Quickly set yourself Available/Busy.  
-4. **Friends Page** – View all friends’ live availability; future filter & messaging planned.  
+2. **Home** – Browse or create vibes for your different groups; see all details with how many friends are "in" for each vibe.  
+3. **Image/Name** – Edit you name and profile image quickly by one click. 
+4. **Settings Menu Page** – Quickly create/ join groups and see all of your groups, with sign out otpion.  
 
 ---
 
@@ -64,6 +73,7 @@ React (Vite) • TypeScript • Firebase Auth • Cloud Firestore • Tailwind C
 ---
 
 ## 🚀 Roadmap  
+Future enhancements planned for WibeChek:
 
 - Filter friends by shared vibes  
 - Direct messaging  

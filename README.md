@@ -43,7 +43,7 @@ Give people a simple, joyful way to broadcast what they’re up to and see what 
 1. **Login** – Fast Google sign-in, frictionless onboarding.  
 2. **Home** – Browse or create vibes for your different groups; see all details with how many friends are "in" for each vibe.  
 3. **Image/Name** – Edit you name and profile image quickly by one click. 
-4. **Settings Menu Page** – Quickly create/ join groups and see all of your groups, with sign out otpion.  
+4. **Settings Menu Page** – Quickly create/ join groups and see all of your groups, with sign out option.  
 
 ---
 

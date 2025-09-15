@@ -1,151 +1,78 @@
-# WibeChek - Real-time Friend Activity App
+# WibeChek – Real-Time Friend Activity App  
 
-A beautiful, mobile-friendly React app that lets users share their current "vibe" (mood/activity) with friends in real-time.
+**WibeChek** is an MVP social-presence app that lets friends instantly share their current “vibe” (mood or activity) with one another.  
+It was conceived, scoped, and delivered as a rapid experiment to validate whether lightweight, real-time status sharing increases social connection.
 
-## 🌟 Features
+---
 
-- **Google Authentication** - Easy sign-in with Firebase Auth
-- **Real-time Updates** - See friend activity instantly with Firestore
-- **Custom Vibes** - Create personalized vibes with emoji + text
-- **Mobile-First Design** - Optimized for all screen sizes
-- **Availability Toggle** - Set your status as Available/Busy
-- **Beautiful UI** - Gradient backgrounds, smooth animations, and emoji-first design
+## 🎯 Product Vision  
 
-## 🚀 Getting Started
+Give people a simple, joyful way to broadcast what they’re up to and see what their friends are doing — instantly and without the clutter of traditional social feeds.
 
-### 1. Firebase Setup
+---
 
-1. Create a new Firebase project at [console.firebase.google.com](https://console.firebase.google.com)
-2. Enable **Authentication** with Google sign-in provider
-3. Enable **Cloud Firestore** database
-4. Get your Firebase configuration object
+## 🗂️ MVP Scope  
 
-### 2. Configure Firebase
+| Area | Feature (MVP) | MoSCoW Priority |
+|------|---------------|-----------------|
+| Authentication | Google sign-in via Firebase Auth | Must-have |
+| Home | Real-time vibe grid showing friend counts | Must-have |
+| Home | Create custom vibes (emoji + text) | Should-have |
+| Home | Availability toggle (Available/Busy) | Must-have |
+| Friends | List of all users with live status | Must-have |
+| Friends | Filter by shared vibes (future) | Could-have |
+| Messaging | Direct messages between friends (future) | Won’t-have (v1) |
 
-Replace the configuration in `src/firebase/config.ts`:
+---
 
-```typescript
-const firebaseConfig = {
-  apiKey: "your-api-key",
-  authDomain: "your-project.firebaseapp.com", 
-  projectId: "your-project-id",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "your-app-id"
-};
-```
+## 👥 User Journey  
 
-### 3. Install Dependencies
+1. **Login** – Fast Google sign-in, frictionless onboarding.  
+2. **Home** – Browse or create vibes; see how many friends are in each vibe.  
+3. **Toggle Status** – Quickly set yourself Available/Busy.  
+4. **Friends Page** – View all friends’ live availability; future filter & messaging planned.  
 
-```bash
-npm install
-```
+---
 
-### 4. Start Development Server
+## 📝 Research & Design  
 
-```bash
-npm run dev
-```
+- Conducted **wireframing and clickable prototypes** to test flows with early users.  
+- Used **MoSCoW prioritization** to decide MVP features vs. backlog.  
+- Applied a **mobile-first design system**: bright gradients, emoji-first UI, and touch-friendly interactions based on feedback.  
 
-## 🏗️ Project Structure
+---
 
-```
-src/
-├── components/           # Reusable UI components
-│   ├── VibeCard.tsx     # Individual vibe display card
-│   ├── AvailabilityToggle.tsx  # Available/Busy toggle
-│   └── ProtectedRoute.tsx      # Route authentication wrapper
-├── contexts/            # React Context providers
-│   └── AuthContext.tsx  # Firebase authentication state
-├── firebase/            # Firebase configuration
-│   └── config.ts        # Firebase app initialization
-├── hooks/              # Custom React hooks
-│   └── useFirestoreVibes.ts  # Vibe data management
-├── pages/              # Main application pages
-│   ├── LoginPage.tsx    # Google sign-in page
-│   ├── HomePage.tsx     # Main vibe selection interface  
-│   └── FriendsPage.tsx  # Friends list and status
-├── types/              # TypeScript type definitions
-│   └── index.ts         # App-wide type definitions
-└── App.tsx             # Main app component and routing
-```
+## 📊 Success Criteria  
 
-## 🔥 Firestore Collections
+- <30-second onboarding (login + first vibe).  
+- Real-time updates under 1 second.  
+- ≥80% of testers rated UI as “fun” or “joyful.”  
 
-### `users`
-```typescript
-{
-  uid: string,           // Firebase Auth UID
-  name: string,          // Display name from Google
-  email: string,         // Email address  
-  photoURL: string,      // Profile picture URL
-  isAvailable: boolean,  // Current availability status
-  createdAt: Date,       // Account creation timestamp
-  lastSeen: Date         // Last activity timestamp
-}
-```
+---
 
-### `vibes`  
-```typescript
-{
-  id: string,           // Auto-generated document ID
-  emoji: string,        // Emoji representation (🎬, 🎮, etc.)
-  title: string,        // Vibe name ("Movie Night", "Gaming")
-  users: string[],      // Array of user UIDs currently in this vibe
-  createdBy: string,    // UID of user who created this vibe
-  createdAt: Date       // Creation timestamp
-}
-```
+## ⚙️ Tech Stack  
 
-## 🎨 Design System
+React (Vite) • TypeScript • Firebase Auth • Cloud Firestore • Tailwind CSS  
 
-- **Colors**: Bright pastels with gradients (pink, purple, blue, green, orange)
-- **Typography**: Clean, readable fonts with proper hierarchy
-- **Spacing**: Consistent 8px grid system
-- **Components**: Rounded corners, subtle shadows, smooth hover effects
-- **Mobile-First**: Responsive design with touch-friendly interactions
+> This repo contains only the lightweight implementation needed to validate the MVP.  
+> Developer setup: `npm install` → `npm run dev` (see `src/firebase/config.ts` for configuration).
 
-## 📱 Pages
+---
 
-### `/login`
-- Clean sign-in interface with Google authentication
-- App branding and welcome message
-- Automatic redirect to home after successful login
+## 🚀 Roadmap  
 
-### `/home` 
-- Grid of available vibes with real-time friend counts
-- Toggle in/out of vibes with visual feedback
-- Availability status toggle
-- Create custom vibes modal
-- User profile and sign-out options
+- Filter friends by shared vibes  
+- Direct messaging  
+- Notifications of vibe changes  
+- Improved analytics dashboard  
 
-### `/friends`
-- List of all users in the community
-- Real-time availability status indicators  
-- Future: Filter by shared vibes, direct messaging
+---
 
-## 🔧 Development
+## 🌐 Live Demo & Code  
 
-```bash
-# Install dependencies
-npm install
+- **Live site**: [https://your-live-site-link.com](https://your-live-site-link.com)  
+- **GitHub repo**: [https://github.com/PranavSingh21/WibeChek](https://github.com/PranavSingh21/WibeChek)  
 
-# Start development server  
-npm run dev
+---
 
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-```
-
-## 🚀 Deployment
-
-The app is ready to deploy to any static hosting service:
-- Vercel
-- Netlify  
-- Firebase Hosting
-- GitHub Pages
-
-Remember to update Firebase configuration for your production domain.
+© 2025 Pranav Anand Singh

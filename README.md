@@ -81,15 +81,16 @@ Give people a simple, joyful way to broadcast what they’re up to and see what 
 - ≥80% of testers rated UI as “fun” or “joyful.”  
 
 ---
+### 🎯 Outcome of the Experiment (Planned)
 
-## ⚙️ Tech Stack  
+The MVP is currently live with a small group of early adopters.  
+Over the next few weeks we’ll be measuring:
 
-React (Vite) • TypeScript • Firebase Auth • Cloud Firestore • Tailwind CSS  
+- **Coordination friction:** Time it takes for friends to agree on small plans (chai break, badminton, etc.) compared to chat apps.  
+- **Awareness:** How often participants check the app vs. messaging directly.  
+- **Sentiment:** Whether users perceive the experience as more joyful and less cluttered than traditional feeds.
 
-> This repo contains only the lightweight implementation needed to validate the MVP.  
-> Developer setup: `npm install` → `npm run dev` (see `src/firebase/config.ts` for configuration).
-
----
+These metrics will help validate (or invalidate) the core hypothesis and shape the roadmap.
 
 ## 🚀 Roadmap  
 Future enhancements planned for WibeChek:
@@ -105,6 +106,14 @@ Future enhancements planned for WibeChek:
 
 - **Live site**: https://wibe-chek.vercel.app/login
 - **GitHub repo**: [https://github.com/PranavSingh21/WibeChek](https://github.com/PranavSingh21/WibeChek)  
+
+---
+## ⚙️ Tech Stack  
+
+React (Vite) • TypeScript • Firebase Auth • Cloud Firestore • Tailwind CSS  
+
+> This repo contains only the lightweight implementation needed to validate the MVP.  
+> Developer setup: `npm install` → `npm run dev` (see `src/firebase/config.ts` for configuration).
 
 ---
 

@@ -1,9 +1,26 @@
 # WibeChek – Real-Time Friend Activity App  
 
-**WibeChek** is an MVP social-presence app that lets friends instantly share their current “vibe” (mood or activity) with one another.  
-It was conceived, scoped, and delivered as a rapid experiment to validate whether lightweight, real-time status sharing increases social connection.
+**WibeChek** is an MVP social-presence app built around a simple observation:  
+friends constantly ping each other for small, everyday plans — a weekend badminton game, a quick chai break, or the start of a trip.  
+
+Instead of endless “what’s up?” messages, WibeChek lets you instantly share your current *vibe* (mood or activity) with your close groups in real time.  
+
+It was conceived, scoped, and delivered as a rapid experiment to validate whether lightweight, real-time status sharing can reduce coordination friction and increase social connection.
+
 
 ---
+
+## 🎯 Target User & Problem
+
+**Target User:** Young professionals or college friends who want a quick way to know what friends are up to without DMing or scrolling through noisy feeds.
+
+**Key Pain Points:**
+- High friction to check friend availability.
+- Existing social media is noisy and not real-time.
+- No lightweight group coordination.
+
+**Our Hypothesis:** Providing a simple, real-time “vibe” grid inside small groups will increase feelings of connection and reduce coordination friction.
+
 
 ## 🎯 Product Vision  
 

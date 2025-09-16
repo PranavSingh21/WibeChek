@@ -52,8 +52,8 @@ Give people a simple, joyful way to broadcast what they’re up to and see what 
 - Conducted **wireframing and clickable prototypes** to test flows with early users.  
 - Used **MoSCoW prioritization** to decide MVP features vs. backlog.  
 - Applied a **mobile-first design system**: bright gradients, emoji-first UI, and touch-friendly interactions based on feedback.
-<img width="706" height="1600" alt="screen" src="https://github.com/user-attachments/assets/406b3d67-1964-48c1-8298-add01aa4c5d5" /> <img width="561" height="1600" alt="screen" src="https://github.com/user-attachments/assets/1d0b7599-3f27-4c0b-b0db-5ab83fd34f3f" />
-<img width="706" height="1600" alt="screen" src="https://github.com/user-attachments/assets/bc23949a-67f1-4afa-aad0-d8b45f104d00" />
+<img width="250" height="600" alt="screen" src="https://github.com/user-attachments/assets/406b3d67-1964-48c1-8298-add01aa4c5d5" /> <img width="250" height="600" alt="screen" src="https://github.com/user-attachments/assets/1d0b7599-3f27-4c0b-b0db-5ab83fd34f3f" />
+<img width="250" height="600" alt="screen" src="https://github.com/user-attachments/assets/bc23949a-67f1-4afa-aad0-d8b45f104d00" />
 
 ---
 

@@ -103,7 +103,7 @@ Future enhancements planned for WibeChek:
 
 ## 🌐 Live Demo & Code  
 
-- **Live site**: [https://wibe-chek.vercel.app/login)
+- **Live site**: https://wibe-chek.vercel.app/login
 - **GitHub repo**: [https://github.com/PranavSingh21/WibeChek](https://github.com/PranavSingh21/WibeChek)  
 
 ---
